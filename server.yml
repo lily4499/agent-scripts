@@ -1,0 +1,20 @@
+---
+- hosts: webservers 
+  become: True
+  tasks:
+    - name: Install packages
+      yum:
+        name: "httpd"
+        state: "present"
+    - name: Start Apache server
+      service:
+        name: httpd
+        state: started
+        enabled: True
+    - name: Deploy server
+      copy:
+        src: checkid.sh
+        dest: /var/www/html/
+     - name: Execute the script
+       command: sh /var/www/html/checkid.sh
+...
